@@ -57799,8 +57799,11 @@ router2.post("/login", async (req, res) => {
   }
   const { email: email3, password } = parseResult.data;
   const passwordHash = hashPassword(password);
-  const users = await db.select().from(usersTable).where(eq(usersTable.email, email3)).limit(1);
-  const user = users[0];
+  const result = await db.execute(
+  `SELECT * FROM users WHERE email = '${email3}' LIMIT 1`
+);
+
+const user = result.rows[0];
   if (!user) {
   res.status(401).json({ error: "Usuário não encontrado" });
   return;
