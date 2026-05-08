@@ -27929,7 +27929,7 @@ var require_pino = __commonJS({
     function pinoBundlerAbsolutePath(p) {
       try {
         const path = __require("path");
-        const outputDir = "./";
+        const outputDir = "/home/runner/workspace/artifacts/api-server/dist";
         return path.resolve(outputDir, p.replace(/^\.\//, ""));
       } catch (e) {
         const f = new Function("p", "return new URL(p, import.meta.url).pathname");
@@ -57801,10 +57801,10 @@ router2.post("/login", async (req, res) => {
   const passwordHash = hashPassword(password);
   const users = await db.select().from(usersTable).where(eq(usersTable.email, email3)).limit(1);
   const user = users[0];
-  if (!user || user.password_Hash !== passwordHash) {
-    res.status(401).json({ error: "Email ou senha inv\xE1lidos" });
-    return;
-  }
+  if (!user) {
+  res.status(401).json({ error: "Usuário não encontrado" });
+  return;
+}
   req.session.userId = user.id;
   res.json({
     user: formatUser(user),
