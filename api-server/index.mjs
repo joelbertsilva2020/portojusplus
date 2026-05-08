@@ -58509,6 +58509,9 @@ var logger = (0, import_pino.default)({
 
 // src/app.ts
 var app = (0, import_express11.default)();
+
+app.set("trust proxy", 1);
+
 app.use(
   (0, import_pino_http.default)({
     logger,
@@ -58528,26 +58531,32 @@ app.use(
     }
   })
 );
+
 app.use((0, import_cors.default)({
   origin: true,
   credentials: true
 }));
+
 app.use(import_express11.default.json());
 app.use(import_express11.default.urlencoded({ extended: true }));
+
 app.use(
   (0, import_express_session.default)({
     secret: process.env["SESSION_SECRET"] ?? "portojus-secret-key",
     resave: false,
     saveUninitialized: false,
+    proxy: true,
     cookie: {
-  secure: true,
-  httpOnly: true,
-  sameSite: "none",
-  maxAge: 7 * 24 * 60 * 60 * 1000
-}
+      secure: true,
+      httpOnly: true,
+      sameSite: "none",
+      maxAge: 7 * 24 * 60 * 60 * 1000
+    }
   })
 );
+
 app.use("/api", routes_default);
+
 var app_default = app;
 
 // src/index.ts
