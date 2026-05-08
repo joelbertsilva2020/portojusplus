@@ -57708,18 +57708,19 @@ var insertMovementSchema = createInsertSchema(movementsTable).omit({ id: true, c
 
 // ../../lib/db/src/index.ts
 var { Pool: Pool3 } = esm_default;
-if (!process.env.DATABASE_URL) {
-  throw new Error(
-    "DATABASE_URL must be set. Did you forget to provision a database?"
-  );
-}
+
 var pool = new Pool3({
-  connectionString: process.env.DATABASE_URL,
+  host: "aws-1-us-east-2.pooler.supabase.com",
+  port: 6543,
+  database: "postgres",
+  user: "postgres.vsbhbvclirlcrxmodfcz",
+  password: "Portojus123",
   ssl: {
     rejectUnauthorized: false
   },
   max: 1
 });
+
 var db = drizzle(pool); 
 
 // src/routes/auth.ts
