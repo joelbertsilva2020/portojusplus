@@ -29411,7 +29411,7 @@ var require_express_session = __commonJS({
         resaveSession = true;
       }
       if (saveUninitializedSession === void 0) {
-        deprecate("undefined saveUninitialized option; provide saveUninitialized option");
+        deprecate("undefined saveUninitialized option; provide  option");
         saveUninitializedSession = true;
       }
       if (opts.unset && opts.unset !== "destroy" && opts.unset !== "keep") {
@@ -58540,10 +58540,10 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-  secure: false,
+  secure: true,
   httpOnly: true,
-  sameSite: "lax",
-  maxAge: 7 * 24 * 60 * 60 * 1e3
+  sameSite: "none",
+  maxAge: 7 * 24 * 60 * 60 * 1000
 }
   })
 );
