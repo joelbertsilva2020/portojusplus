@@ -45895,74 +45895,17 @@ var PgPreparedQuery = class {
     return this;
   }
   static [entityKind] = "PgPreparedQuery";
-  /** @internal */
-  joinsNotNullableMap;
-  /** @internal */
-  async queryWithCache(queryString, params, query) {
-    if (this.cache === void 0 || is(this.cache, NoopCache) || this.queryMetadata === void 0) {
-      try {
-        return await query();
-      } catch (e) {
-        throw new DrizzleQueryError(queryString, params, e);
-      }
-    }
-    if (this.cacheConfig && !this.cacheConfig.enable) {
-      try {
-        return await query();
-      } catch (e) {
-        throw new DrizzleQueryError(queryString, params, e);
-      }
-    }
-    if ((this.queryMetadata.type === "insert" || this.queryMetadata.type === "update" || this.queryMetadata.type === "delete") && this.queryMetadata.tables.length > 0) {
-      try {
-        const [res] = await Promise.all([
-          query(),
-          this.cache.onMutate({ tables: this.queryMetadata.tables })
-        ]);
-        return res;
-      } catch (e) {
-        throw new DrizzleQueryError(queryString, params, e);
-      }
-    }
-    if (!this.cacheConfig) {
-      try {
-        return await query();
-      } catch (e) {
-        throw new DrizzleQueryError(queryString, params, e);
-      }
-    }
-    if (this.queryMetadata.type === "select") {
-      const fromCache = await this.cache.get(
-        this.cacheConfig.tag ?? await hashQuery(queryString, params),
-        this.queryMetadata.tables,
-        this.cacheConfig.tag !== void 0,
-        this.cacheConfig.autoInvalidate
-      );
-      if (fromCache === void 0) {
-        let result;
-        try {
-          result = await query();
-        } catch (e) {
-          throw new DrizzleQueryError(queryString, params, e);
-        }
-        await this.cache.put(
-          this.cacheConfig.tag ?? await hashQuery(queryString, params),
-          result,
-          // make sure we send tables that were used in a query only if user wants to invalidate it on each write
-          this.cacheConfig.autoInvalidate ? this.queryMetadata.tables : [],
-          this.cacheConfig.tag !== void 0,
-          this.cacheConfig.config
-        );
-        return result;
-      }
-      return fromCache;
-    }
-    try {
-      return await query();
-    } catch (e) {
-      throw new DrizzleQueryError(queryString, params, e);
-    }
+/** @internal */
+joinsNotNullableMap;
+/** @internal */
+async queryWithCache(queryString, params, query) {
+  try {
+    return await query();
+  } catch (e) {
+    console.error("QUERY ERROR:", e);
+    throw e;
   }
+}
 };
 var PgSession = class {
   constructor(dialect) {
