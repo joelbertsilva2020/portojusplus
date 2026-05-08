@@ -58540,10 +58540,11 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: false,
-      httpOnly: true,
-      maxAge: 7 * 24 * 60 * 60 * 1e3
-    }
+  secure: false,
+  httpOnly: true,
+  sameSite: "lax",
+  maxAge: 7 * 24 * 60 * 60 * 1e3
+}
   })
 );
 app.use("/api", routes_default);
