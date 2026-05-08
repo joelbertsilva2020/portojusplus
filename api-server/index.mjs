@@ -57714,14 +57714,14 @@ var pool = new Pool3({
   port: 6543,
   database: "postgres",
   user: "postgres.vsbhbvclirlcrxmodfcz",
-  password: "Portojus123",
+  password: "portojus123a",
   ssl: {
     rejectUnauthorized: false
   },
   max: 1
 });
 
-var db = drizzle(pool); 
+var db = drizzle(pool);
 
 // src/routes/auth.ts
 import { createHash } from "crypto";
