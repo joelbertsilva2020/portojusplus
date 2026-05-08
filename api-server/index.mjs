@@ -57777,7 +57777,7 @@ var pool = new Pool3({
   },
   max: 1
 });
-var db = drizzle(pool, { schema: schema_exports });
+var db = drizzle(pool); 
 
 // src/routes/auth.ts
 import { createHash } from "crypto";
